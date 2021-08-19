@@ -1,5 +1,6 @@
 const Users = require('../../models');
 const checkPassword = require("../../middlewares/CheckPassword");
+const checkEmailForm = require("../../middlewares/CheckEmailForm");
 
 module.exports = {
   post : (req, res) =>{
@@ -16,6 +17,9 @@ module.exports = {
     }
     else if (!checkPassword(password)) {
       res.status(403).send("Special Characters or Numbers or English were not included in password.");
+    }
+    else if (!checkEmailForm(email)) {
+      res.status(403).send("Keep e-mail form.");
     }
   }
 }
