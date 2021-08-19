@@ -1,6 +1,9 @@
 const { Users } = require('../../models');
 const checkPassword = require("../../middlewares/CheckPassword");
 const checkEmailForm = require("../../middlewares/CheckEmailForm");
+const crypto = require('crypto');
+
+
 require('dotenv').config();
 
 module.exports = {
@@ -23,9 +26,35 @@ module.exports = {
       res.status(403).send("Keep e-mail form.");
     }
     else{
+      const createSalt = () => 
+        new Promise ((resolve, reject) => {
+          crypto.randomBytes(64, (err, buf) => {
+            if (err) reject(err);
+            resolve(buf.toString('base64'));
+          })
+        })
+
+      const createHashedPassword = (pass) => 
+        new Promise(async (resolve, reject) =>{
+          const salt = await createSalt();
+          crypto.pbkdf2(pass, salt, 1009, 64, 'sha512', (err, key) => {
+            if (err) reject(err);
+            resolve({ hashpaw: key.toString('base64'), salt })
+          });
+        });
+
+      const { hashpaw, salt } = await createHashedPassword(password);
+      console.log('hashPass : ', hashpaw);
+      console.log('salt : ', salt);
+
       await Users.findOrCreate({
         where : {
           email
+        },
+        defaults: {
+          nickname, 
+          password : hashpaw,
+          salt:salt
         }
       }).then(([data, created]) => {
         if (!created) {
