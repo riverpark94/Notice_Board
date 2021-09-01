@@ -1,5 +1,6 @@
 const { Users } = require('../../models');
 const secretObj = require("../../config/jwt");
+const jwt = require("jsonwebtoken");
 const crypto = require('crypto');
 require('dotenv').config();
 
@@ -22,7 +23,8 @@ module.exports = {
         const dbSalt = userInfo.dataValues.salt
     const dbPass = userInfo.dataValues.password
     console.log("[salt] : ", dbSalt);
-    console.log("[password] : ", dbPass);
+    console.log("[Infopass] : ", password);
+    console.log("[dbPass] : ", dbPass);
     console.log("[InfoPassword] :", password)
 
     const createHashedPassword = (pass) => 
@@ -43,7 +45,21 @@ module.exports = {
       return;
     } 
     else{
-      res.status(200).send("Information matching, login successful")
+      const token = jwt.sign(
+        email,
+        secret,
+        // {expiresIn: "7d"}
+      );
+
+      console.log("[token] : ", token)
+      res.status(200).send({
+        token,
+        user : {
+          id : userInfo.dataValues.id,
+          email,
+          nickname : userInfo.dataValues.nickname
+        }
+      })
     }
   }
 }
