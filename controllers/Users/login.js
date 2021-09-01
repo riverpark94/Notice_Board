@@ -19,5 +19,31 @@ module.exports = {
       res.status(403).send("Non-Existent User.");
       return;
     }
+        const dbSalt = userInfo.dataValues.salt
+    const dbPass = userInfo.dataValues.password
+    console.log("[salt] : ", dbSalt);
+    console.log("[password] : ", dbPass);
+    console.log("[InfoPassword] :", password)
+
+    const createHashedPassword = (pass) => 
+      new Promise(async (resolve, reject) =>{
+        crypto.pbkdf2(pass, dbSalt, 1009, 64, 'sha512', (err, key) => {
+          if (err) reject(err);
+          resolve({ hashpaw: key.toString('base64'), dbSalt })
+        });
+      });
+
+      console.log(await createHashedPassword(password))
+
+    const {hashpaw} = await createHashedPassword(password);
+    console.log("[hashpaw] :", hashpaw)
+
+    if(dbPass !== hashpaw) {
+      res.status(403).send("The password is incorrect.");
+      return;
+    } 
+    else{
+      res.status(200).send("Information matching, login successful")
+    }
   }
 }
