@@ -51,15 +51,20 @@ module.exports = {
         // {expiresIn: "7d"}
       );
 
-      res.cookie("sid", token)
-      res.status(200).send({
-        token,
-        user : {
-          id : userInfo.dataValues.id,
-          email,
-          nickname : userInfo.dataValues.nickname
-        }
-      })
+      res
+        .cookie("sid", token, {
+                  maxAge: 1000 * 60 * 60 * 24 * 7, // 7일간 유지
+                  httpOnly: true,
+                })
+        .status(200)
+        .send({
+          token,
+          user : {
+            id : userInfo.dataValues.id,
+            email,
+            nickname : userInfo.dataValues.nickname
+          }
+        })
     }
   }
 }
