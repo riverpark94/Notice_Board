@@ -51,7 +51,7 @@ module.exports = {
         // {expiresIn: "7d"}
       );
 
-      console.log("[token] : ", token)
+      res.cookie("sid", token)
       res.status(200).send({
         token,
         user : {
