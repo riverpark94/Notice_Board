@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const checkToken = require('../middlewares/checkToken');
-const { userController } = require('../controllers');
+const { userController, myPageController } = require('../controllers');
 
 
 router.get('/', (req, res) => {
@@ -14,7 +14,7 @@ router.post('/user/login', userController.login.post);
 
 router.use(checkToken);
 router.post('/user/logout', userController.logout.post);
-router.get('/user/myPage', userController.myPage.get);
+router.get('/user/myPage', myPageController.myPage.get);
 
 
 
