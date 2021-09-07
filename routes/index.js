@@ -14,4 +14,9 @@ router.post('/user/login', userController.login.post);
 
 router.use(checkToken);
 router.post('/user/logout', userController.logout.post);
+router.get('/user/myPage', userController.myPage.get);
+
+
+
+
 module.exports = router;
