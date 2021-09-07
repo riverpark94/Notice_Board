@@ -2,18 +2,19 @@ const jwt = require('jsonwebtoken');
 let secretObj = require("../config/jwt");
 
 const checkToken = (req, res, next) => {
-  console.log("[req.cookies] : ", req.headers.cookie.split("=")[1]);
+  // console.log("[req.cookies] : ", req.headers.cookie.split("=")[1]);
 
-  const token = req.headers.cookie.split("=")[1];
+  const cookie = req.headers.cookie;
   const secret = secretObj.secret;
 
-  if (!token){
-    req.status(401).json({
+  if (!cookie){
+    res.status(401).json({
       success:false,
       message:'unvaild token'
     })
   }
 
+  const token = cookie.split("=")[1];
   const check = new Promise((resolve, reject) =>{
     jwt.verify(token, secret, (err, decoded) => {
       if (err) reject(err);
