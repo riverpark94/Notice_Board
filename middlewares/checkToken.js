@@ -24,7 +24,6 @@ const checkToken = (req, res, next) => {
 
   check.then(user => {
     req.user = user;
-    console.log("[user] :", req.user)
     next();
   }).catch(err => {
       res.status(401).json({
