@@ -7,7 +7,7 @@ require('dotenv').config();
 
 module.exports = {
   post : async (req, res) =>{
-    const {email, password} = req.body
+    const { email, password } = req.body;
     const secret = secretObj.secret;
 
     const userInfo = await Users.findOne({
@@ -20,25 +20,19 @@ module.exports = {
       res.status(403).send("Non-Existent User.");
       return;
     }
-        const dbSalt = userInfo.dataValues.salt
-    const dbPass = userInfo.dataValues.password
-    console.log("[salt] : ", dbSalt);
-    console.log("[Infopass] : ", password);
-    console.log("[dbPass] : ", dbPass);
-    console.log("[InfoPassword] :", password)
+    const dbId = userInfo.dataValues.id;
+    const dbNickname = userInfo.dataValues.nickname;
+    const dbSalt = userInfo.dataValues.salt;
+    const dbPass = userInfo.dataValues.password;
 
     const createHashedPassword = (pass) => 
       new Promise(async (resolve, reject) =>{
         crypto.pbkdf2(pass, dbSalt, 1009, 64, 'sha512', (err, key) => {
           if (err) reject(err);
-          resolve({ hashpaw: key.toString('base64'), dbSalt })
+          resolve({ hashpaw: key.toString('base64'), dbSalt });
         });
       });
-
-      console.log(await createHashedPassword(password))
-
-    const {hashpaw} = await createHashedPassword(password);
-    console.log("[hashpaw] :", hashpaw)
+    const { hashpaw } = await createHashedPassword(password);
 
     if(dbPass !== hashpaw) {
       res.status(403).send("The password is incorrect.");
@@ -50,7 +44,6 @@ module.exports = {
         secret,
         // {expiresIn: "7d"}
       );
-
       res
         .cookie("sid", token, {
                   maxAge: 1000 * 60 * 60 * 24 * 7, // 7일간 유지
@@ -60,9 +53,9 @@ module.exports = {
         .send({
           token,
           user : {
-            id : userInfo.dataValues.id,
+            id : dbId,
             email,
-            nickname : userInfo.dataValues.nickname
+            nickname : dbNickname
           }
         })
     }
