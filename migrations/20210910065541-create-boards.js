@@ -23,7 +23,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       like: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        defaultValue:0
       },
       createdAt: {
         allowNull: false,
@@ -33,6 +34,15 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
+    },{
+
+    charset: 'utf8',
+    collate: 'utf8_unicode_ci',
+    underscored: true,
+ 
+    freezeTableName: true,
+ 
+    tableName: 'Boards'
     });
   },
   down: async (queryInterface, Sequelize) => {
