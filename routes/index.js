@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const checkToken = require('../middlewares/checkToken');
-const { userController, myPageController } = require('../controllers');
+const { userController, 
+        myPageController, 
+        BoardController } = require('../controllers');
 
 
 router.get('/', (req, res) => {
@@ -16,6 +18,7 @@ router.use(checkToken);
 router.post('/user/logout', userController.logout.post);
 router.get('/user/myPage', myPageController.myPage.get);
 router.put('/user/myPage', myPageController.editUserInfo.put);
+router.put('/board/myPage', BoardController.writeBoard.post);
 
 
 
