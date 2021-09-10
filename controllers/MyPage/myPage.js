@@ -1,10 +1,8 @@
 const { Users } = require('../../models');
-
 require('dotenv').config();
 
 module.exports = {
   get : async (req, res) =>{
-    console.log(req.user);
     const email = req.user;
 
     Users.findOne({
@@ -20,7 +18,5 @@ module.exports = {
           }
         })
     })
-
-
   }
 }

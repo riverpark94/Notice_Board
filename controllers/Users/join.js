@@ -8,10 +8,7 @@ require('dotenv').config();
 
 module.exports = {
   post : async (req, res) =>{
-    console.log(req.body);
     const { email, nickname, password } = req.body;
-    // console.log("[nickname 길이] : ", nickname.length)
-    // console.log("[checkPassword(password)] : ", checkPassword(password));
 
     if( !email || !nickname  || !password) {
       res.status(400).send("not enough user information.");
@@ -44,9 +41,7 @@ module.exports = {
         });
 
       const { hashpaw, salt } = await createHashedPassword(password);
-      console.log('hashPass : ', hashpaw);
-      console.log('salt : ', salt);
-
+      
       await Users.findOrCreate({
         where : {
           email
