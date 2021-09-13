@@ -8,7 +8,6 @@ require('dotenv').config();
 module.exports = {
   post : async (req, res) =>{
     res.clearCookie("sid");
-    res.clearCookie("connect.sid");
     res.status(205).send("logged out success");
   }
 }
