@@ -24,8 +24,6 @@ module.exports = {
       const dbId = userInfo.dataValues.id;
       const dbNickname = userInfo.dataValues.nickname;
 
-      console.log(dbId, dbNickname)
-
       await Boards.create({
         userId : dbId,
         title : title,
@@ -33,7 +31,6 @@ module.exports = {
         like : 0
       })
       .then (data => {
-        console.log('[data]:', data);
         res.status(200).json({
           userId: data.userId,
           user : {
