@@ -15,6 +15,7 @@ router.post('/user/login', userController.login.post);
 
 router.use(checkToken);
 router.post('/user/logout', userController.logout.post);
+router.delete('/user/logout', userController.withdrawal.delete);
 router.get('/user/myPage', myPageController.myPage.get);
 router.put('/user/myPage', myPageController.editUserInfo.put);
 router.post('/board/write', BoardController.writeBoard.post);
