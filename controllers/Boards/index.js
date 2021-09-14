@@ -1,6 +1,6 @@
 module.exports = {
   writeBoard : require("./writeBoard"),
-  searchBords : require("./searchBords"),
+  searchBords : require("./searchBoards"),
   viewBoard : require("./viewBoard"),
-  getBords : require("./getBords"),
+  getBords : require("./getBoards"),
 }
