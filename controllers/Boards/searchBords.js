@@ -4,6 +4,7 @@ const { Op } = require("sequelize");
 module.exports = {
   get : async (req, res) =>{
     const { search } = req.params;
+    console.log(id)
 
     Boards.findAll({
       where : {

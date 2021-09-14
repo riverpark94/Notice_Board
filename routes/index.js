@@ -12,8 +12,8 @@ router.get('/', (req, res) => {
 
 router.post('/user/join', userController.join.post);
 router.post('/user/login', userController.login.post);
-router.get('/board/:search', BoardController.searchBords.get);
-router.get('/board/:id', BoardController.viewBoard.get);
+router.get('/board/search/:search', BoardController.searchBords.get);
+router.get('/board/view/:id', BoardController.viewBoard.get);
 
 router.use(checkToken);
 
