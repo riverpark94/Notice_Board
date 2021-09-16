@@ -1,6 +1,7 @@
 const { Boards } = require('../../models');
-const { Op } = require("sequelize");
 const { Users } = require('../../models');
+
+const { Op } = require("sequelize");
 
 module.exports = {
   get : async (req, res) =>{
