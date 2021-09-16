@@ -26,5 +26,6 @@ router.get('/user/myPage', myPageController.myPage.get);
 router.put('/user/myPage', myPageController.editUserInfo.put);
 
 router.post('/board/write', BoardController.writeBoard.post);
+router.put('/board/view/:id/edit', BoardController.editBoards.put);
 
 module.exports = router;
