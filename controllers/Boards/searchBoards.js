@@ -1,10 +1,11 @@
 const { Boards } = require('../../models');
 const { Op } = require("sequelize");
+const { Users } = require('../../models');
 
 module.exports = {
   get : async (req, res) =>{
     const { search } = req.params;
-    console.log(id)
+    // console.log(id)
 
     Boards.findAll({
       where : {
@@ -20,7 +21,12 @@ module.exports = {
           }
         ]          
       },
-      order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'DESC']],
+      include : [
+        { model : Users, 
+          required: true, 
+          attributes : {exclude :["id","email","password", "salt", "createdAt", "updatedAt"]} }
+      ]
     }).then(data => {
         res.status(200).send(data)
     })
